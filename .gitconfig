@@ -1,0 +1,101 @@
+[user]
+	name = <name>
+	email = <email>
+[init]
+	defaultBranch = main
+[branch]
+    sort = -committerdate   # git branch lists most recently active branches first
+[core]
+	longpaths = true
+	ignorecase = false
+	autocrlf = false
+	editor = code --wait
+	preloadindex = true
+	fscache = true
+[diff]
+	tool = code
+	colorMoved = default   
+[difftool]
+	cmd = code --wait --diff $LOCAL $REMOTE
+[fetch]
+	prune = true
+[pull]
+	rebase = true
+[push]
+	default = current
+	followTags = true
+[merge]
+	tool = code
+	conflictStyle = zdiff3  # shows common ancestor in conflict markers — much easier to read
+[mergetool]
+	cmd = code --wait $MERGED
+
+[rebase]
+    autoSquash = true    # fixup! commits auto-apply during rebase -i (you have the fixup alias)
+    autoStash = true     # stash/unstash dirty tree automatically around rebases
+
+[rerere]
+    enabled = true       # remembers conflict resolutions so you don't redo them
+
+[tag]
+	forceSignAnnotated = false
+	
+[alias]
+	a = add
+	aa = add -A
+	aap = add -A -p
+	ab = rev-list --left-right --count origin/main...
+	amend = commit --amend --no-edit
+	amend-all = "!f(){ git add -A; git commit --amend --no-edit; }; f"
+	amend-all-push = "!f(){ git add -A; git commit --amend --no-edit; git push --force-with-lease; }; f"
+	ap = add -p
+	back = checkout -
+	c = commit
+	candidate = checkout candidate
+	cb = checkout -b
+	cc = commit -C
+	cm = commit -m
+	cma = "!f(){ git add -A; git commit -m \"$1\"; }; f"
+	ch = checkout
+	cp = cherry-pick
+	del = branch -D
+	del-r = push origin --delete
+	ec = config --global -e
+	f = fetch
+	ffmerge = merge --ff-only
+	fixup = commit --fixup
+	kill = "!f() { git branch -D $1; git push origin --delete $1; }; f"
+	kill-tag = "!f(){ git tag --delete $1; git push --delete origin $1; }; f"
+	lb = branch -a
+	lg = log --graph --decorate --oneline
+	lol = log --oneline
+	lol-nt = log --format='%C(auto) %h %s'
+	main = checkout main
+	mb = merge-base HEAD origin/main
+	mt = mergetool
+	nb = checkout origin/main -b
+	new = log origin/main.. --oneline
+	new-f = log origin/main..
+	nukefile = "!f(){ filter=$("git rm --cached --ignore-unmatch $file"); git filter-branch --force --index-filter "$filter" --prune-empty --tag-name-filter cat -- --all; }; f"
+	pf = add -p
+	production = checkout production
+	pu = push -u
+	push-all = "!f(){ git add -A; git commit -m 'Updated all the things'; git push; }; f"
+	pushfwl = push --force-with-lease
+	ra = rebase --abort
+	rc = rebase --continue
+	reword = commit --amend
+	ri = rebase -i
+	rimb = "!f(){ mb=$(git merge-base HEAD origin/main); git rebase -i $mb; }; f"
+	rmb = "!f(){ mb=$(git merge-base HEAD origin/main); git reset $mb; }; f"
+	rm-cached-dir = "rm -r --cached"
+	rom = rebase origin/main
+	scrub = "!f(){ git clean -fd; git reset --hard; }; f"
+	scrubx = "!f(){ git clean -fxd; git reset --hard; }; f"
+	server = !git daemon --base-path=. --export-all --enable=receive-pack --reuseaddr --informative-errors --verbose
+	st = status
+	tagage = !sh -c 'git for-each-ref --sort=taggerdate refs/tags --format=\"%(refname:short)\"'
+	wip = "!f(){ git add -A; git commit -m wip; }; f"
+	wipit = "!f(){ git add -A; git commit -m wip; git push;}; f"
+[status]
+	submodulesummary = 0
