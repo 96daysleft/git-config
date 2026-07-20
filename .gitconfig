@@ -24,6 +24,7 @@
 [push]
 	default = current
 	followTags = true
+	autoSetupRemote = true
 [merge]
 	tool = code
 	conflictStyle = zdiff3  # shows common ancestor in conflict markers — much easier to read
