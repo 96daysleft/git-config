@@ -42,61 +42,62 @@
 	forceSignAnnotated = false
 	
 [alias]
-	a = add
-	aa = add -A
-	aap = add -A -p
-	ab = rev-list --left-right --count origin/main...
-	amend = commit --amend --no-edit
-	amend-all = "!f(){ git add -A; git commit --amend --no-edit; }; f"
-	amend-all-push = "!f(){ git add -A; git commit --amend --no-edit; git push --force-with-lease; }; f"
-	ap = add -p
-	back = checkout -
-	c = commit
-	candidate = checkout candidate
-	cb = checkout -b
-	cc = commit -C
-	cm = commit -m
-	cma = "!f(){ git add -A; git commit -m \"$1\"; }; f"
-	ch = checkout
-	cp = cherry-pick
-	del = branch -D
-	del-r = push origin --delete
-	ec = config --global -e
-	f = fetch
-	ffmerge = merge --ff-only
-	fixup = commit --fixup
-	kill = "!f() { git branch -D $1; git push origin --delete $1; }; f"
-	kill-tag = "!f(){ git tag --delete $1; git push --delete origin $1; }; f"
-	lb = branch -a
-	lg = log --graph --decorate --oneline
-	lol = log --oneline
-	lol-nt = log --format='%C(auto) %h %s'
-	main = checkout main
-	mb = merge-base HEAD origin/main
-	mt = mergetool
-	nb = checkout origin/main -b
-	new = log origin/main.. --oneline
-	new-f = log origin/main..
-	nukefile = "!f(){ filter=$("git rm --cached --ignore-unmatch $file"); git filter-branch --force --index-filter "$filter" --prune-empty --tag-name-filter cat -- --all; }; f"
-	pf = add -p
-	production = checkout production
-	pu = push -u
-	push-all = "!f(){ git add -A; git commit -m 'Updated all the things'; git push; }; f"
-	pushfwl = push --force-with-lease
-	ra = rebase --abort
-	rc = rebase --continue
-	reword = commit --amend
-	ri = rebase -i
-	rimb = "!f(){ mb=$(git merge-base HEAD origin/main); git rebase -i $mb; }; f"
-	rmb = "!f(){ mb=$(git merge-base HEAD origin/main); git reset $mb; }; f"
-	rm-cached-dir = "rm -r --cached"
-	rom = rebase origin/main
-	scrub = "!f(){ git clean -fd; git reset --hard; }; f"
-	scrubx = "!f(){ git clean -fxd; git reset --hard; }; f"
-	server = !git daemon --base-path=. --export-all --enable=receive-pack --reuseaddr --informative-errors --verbose
-	st = status
-	tagage = !sh -c 'git for-each-ref --sort=taggerdate refs/tags --format=\"%(refname:short)\"'
-	wip = "!f(){ git add -A; git commit -m wip; }; f"
-	wipit = "!f(){ git add -A; git commit -m wip; git push;}; f"
+	a = add                                                                                        # stage a file
+	aa = add -A                                                                                     # stage all changes
+	aap = add -A -p                                                                                 # stage all changes, interactively hunk by hunk
+	ab = rev-list --left-right --count origin/main...                                              # count commits your branch is ahead/behind origin/main
+	amend = commit --amend --no-edit                                                                # amend last commit, keep its message
+	amend-all = "!f(){ git add -A; git commit --amend --no-edit; }; f"                               # stage everything and amend last commit
+	amend-all-push = "!f(){ git add -A; git commit --amend --no-edit; git push --force-with-lease; }; f" # stage, amend, and force-push (safely)
+	ap = add -p                                                                                     # stage interactively, hunk by hunk
+	back = checkout -                                                                               # switch to previous branch
+	c = commit                                                                                      # commit
+	candidate = checkout candidate                                                                  # switch to the "candidate" branch
+	cb = checkout -b                                                                                # create and switch to a new branch
+	cc = commit -C                                                                                  # reuse another commit's message (needs a commit ref)
+	chore = "!f(){ git commit --allow-empty -m \"chore:$1\"; git push; }; f"                         # empty "chore:" commit, then push
+	cm = commit -m                                                                                  # commit with a message
+	cma = "!f(){ git add -A; git commit -m \"$1\"; }; f"                                              # stage everything and commit with message
+	ch = checkout                                                                                   # checkout
+	cp = cherry-pick                                                                                # cherry-pick a commit
+	del = branch -D                                                                                 # force-delete a local branch
+	del-r = push origin --delete                                                                    # delete a remote branch
+	ec = config --global -e                                                                         # edit the global gitconfig
+	f = fetch                                                                                       # fetch
+	ffmerge = merge --ff-only                                                                       # merge only if it can fast-forward
+	fixup = commit --fixup                                                                          # create a fixup! commit for autosquash rebase
+	kill = "!f() { git branch -D $1; git push origin --delete $1; }; f"                              # delete a branch locally and on origin
+	kill-tag = "!f(){ git tag --delete $1; git push --delete origin $1; }; f"                        # delete a tag locally and on origin
+	lb = branch -a                                                                                  # list all branches (local + remote)
+	lg = log --graph --decorate --oneline                                                           # compact graph log
+	lol = log --oneline                                                                              # one-line log
+	lol-nt = log --format='%C(auto) %h %s'                                                          # one-line log, untruncated
+	lt = tag -l                                                                                     # list tags
+	main = checkout main                                                                            # switch to main
+	mb = merge-base HEAD origin/main                                                                # common ancestor with origin/main
+	mt = mergetool                                                                                  # launch mergetool
+	nb = checkout origin/main -b                                                                    # branch off the latest origin/main
+	new = log origin/main.. --oneline                                                               # commits on this branch not yet on origin/main
+	new-f = log origin/main..                                                                       # same as `new`, full log format
+	nukefile = "!f(){ git filter-branch --force --index-filter \"git rm --cached --ignore-unmatch $1\" --prune-empty --tag-name-filter cat -- --all; }; f" # purge a file from all of history (rewrites every commit/tag)
+	production = checkout production                                                                # switch to the "production" branch
+	pu = push -u                                                                                    # push and set upstream
+	push-all = "!f(){ git add -A; git commit -m 'Updated all the things'; git push; }; f"            # stage, commit, and push everything
+	pushfwl = push --force-with-lease                                                               # force-push, but abort if remote moved
+	ra = rebase --abort                                                                             # abort an in-progress rebase
+	rc = rebase --continue                                                                          # continue an in-progress rebase
+	reword = commit --amend                                                                         # edit last commit's message
+	ri = rebase -i                                                                                  # interactive rebase
+	rimb = "!f(){ mb=$(git merge-base HEAD origin/main); git rebase -i $mb; }; f"                    # interactive rebase onto merge-base with origin/main
+	rmb = "!f(){ mb=$(git merge-base HEAD origin/main); git reset $mb; }; f"                         # reset to merge-base with origin/main
+	rm-cached-dir = "rm -r --cached"                                                                # untrack a directory without deleting it
+	rom = rebase origin/main                                                                        # rebase current branch onto origin/main
+	scrub = "!f(){ git clean -fd; git reset --hard; }; f"                                            # discard all uncommitted/untracked changes
+	scrubx = "!f(){ git clean -fxd; git reset --hard; }; f"                                          # scrub, including ignored files too
+	server = !git daemon --base-path=. --export-all --enable=receive-pack --reuseaddr --informative-errors --verbose # serve this repo over the network (allows anonymous push!)
+	st = status                                                                                     # status
+	tagage = for-each-ref --sort=taggerdate refs/tags --format='%(refname:short)'                   # list tags sorted by tagger date
+	wip = "!f(){ git add -A; git commit -m wip; }; f"                                                # stage everything and commit as "wip"
+	wipit = "!f(){ git add -A; git commit -m wip; git push;}; f"                                     # wip, plus push
 [status]
 	submodulesummary = 0
