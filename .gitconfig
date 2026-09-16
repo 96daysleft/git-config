@@ -88,6 +88,7 @@
 	rc = rebase --continue                                                                          # continue an in-progress rebase
 	reword = commit --amend                                                                         # edit last commit's message
 	ri = rebase -i                                                                                  # interactive rebase
+	rir = rebase -i --root                                                                          # interactive rebase from the very first commit
 	rimb = "!f(){ mb=$(git merge-base HEAD origin/main); git rebase -i $mb; }; f"                    # interactive rebase onto merge-base with origin/main
 	rmb = "!f(){ mb=$(git merge-base HEAD origin/main); git reset $mb; }; f"                         # reset to merge-base with origin/main
 	rm-cached-dir = "rm -r --cached"                                                                # untrack a directory without deleting it
