@@ -26,6 +26,7 @@ git config --global user.email "you@example.com"
 | `aap` | `add -A -p` | Stage all changes, interactively hunk by hunk |
 | `ab` | `rev-list --left-right --count origin/main...` | Count commits your branch is ahead/behind origin/main |
 | `amend` | `commit --amend --no-edit` | Amend last commit, keep its message |
+| `amend-edit` | `commit --amend` | Amend last commit and edit its message |
 | `amend-all` | `add -A && commit --amend --no-edit` | Stage everything and amend last commit |
 | `amend-all-push` | `add -A && commit --amend --no-edit && push --force-with-lease` | Stage, amend, and force-push (safely) |
 | `ap` | `add -p` | Stage interactively, hunk by hunk |

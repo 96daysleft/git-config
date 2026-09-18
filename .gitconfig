@@ -47,6 +47,7 @@
 	aap = add -A -p                                                                                 # stage all changes, interactively hunk by hunk
 	ab = rev-list --left-right --count origin/main...                                              # count commits your branch is ahead/behind origin/main
 	amend = commit --amend --no-edit                                                                # amend last commit, keep its message
+	amend-edit = commit --amend                                                                     # amend last commit and edit its message
 	amend-all = "!f(){ git add -A; git commit --amend --no-edit; }; f"                               # stage everything and amend last commit
 	amend-all-push = "!f(){ git add -A; git commit --amend --no-edit; git push --force-with-lease; }; f" # stage, amend, and force-push (safely)
 	ap = add -p                                                                                     # stage interactively, hunk by hunk
