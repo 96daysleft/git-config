@@ -53,6 +53,7 @@
 	ap = add -p                                                                                     # stage interactively, hunk by hunk
 	back = checkout -                                                                               # switch to previous branch
 	c = commit                                                                                      # commit
+	ca = commit --amend                                                                             # commit amend
 	candidate = checkout candidate                                                                  # switch to the "candidate" branch
 	cb = checkout -b                                                                                # create and switch to a new branch
 	cc = commit -C                                                                                  # reuse another commit's message (needs a commit ref)

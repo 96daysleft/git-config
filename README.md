@@ -32,6 +32,7 @@ git config --global user.email "you@example.com"
 | `ap` | `add -p` | Stage interactively, hunk by hunk |
 | `back` | `checkout -` | Switch to previous branch |
 | `c` | `commit` | Commit |
+| `ca` | `commit --amend` | Commit amend |
 | `candidate` | `checkout candidate` | Switch to the "candidate" branch |
 | `cb` | `checkout -b` | Create and switch to a new branch |
 | `cc` | `commit -C` | Reuse another commit's message (needs a commit ref) |
